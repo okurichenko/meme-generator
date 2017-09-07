@@ -4,7 +4,7 @@ const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#000000',
     paddingTop: 20,
   },
   welcome: {
@@ -18,13 +18,35 @@ export default StyleSheet.create({
     marginBottom: 5,
   },
   memePlate: {
-    padding: 5,
-    width: width / 2,
+    padding: 3,
+    width: width / 2 - 10,
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+    marginVertical: 7,
+  },
+  searchBar: {
+    position: 'relative',
+  },
+  searchBarIcon: {
+    position: 'absolute',
+    right: 18,
+    top: 20,
+  },
+  searchBarTextInput: {
+    color: '#FFFFFF',
+    marginVertical: 10,
+    marginHorizontal: 5,
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
   },
   scrollView: {
     flex: 1,
     flexDirection: 'row',
     width: width,
+    paddingHorizontal: 5,
   },
   memeList: {
     flexDirection: 'column',

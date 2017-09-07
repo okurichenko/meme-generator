@@ -14,6 +14,13 @@ export function fetchMemes() {
   }
 }
 
+export function setFilterLine(filterLine) {
+  return {
+    type: 'SET_FILTER_LINE',
+    filterLine,
+  }
+}
+
 export function setFetchedMemes(memes) {
   return {
     type: 'SET_FETCHED_MEMES',

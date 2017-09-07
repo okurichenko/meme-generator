@@ -1,19 +1,16 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import ActionCreators from '../../store/actions';
-import Home from '../Home';
+import { View, StatusBar } from 'react-native'
+import ReduxNavigation from '../../navigation/ReduxNavigation';
 
 class AppContainer extends Component {
   render() {
     return (
-      <Home {...this.props} />
+      <View style={{flex: 1}}>
+        <StatusBar barStyle='light-content' />
+        <ReduxNavigation />
+      </View>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
-export default connect(() => { return {} }, mapDispatchToProps)(AppContainer);
+export default AppContainer;
