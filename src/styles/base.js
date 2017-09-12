@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -24,5 +24,16 @@ export default StyleSheet.create({
     left: 0,
     paddingHorizontal: 10,
     top: 10,
+  },
+  inputField: {
+    flex: 1,
+    color: '#FFFFFF',
+    marginVertical: 10,
+    marginHorizontal: 5,
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+    borderRadius: 3,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
   },
 });

@@ -6,8 +6,8 @@ import GeneratedScreen from '../containers/Generated'
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
   HomeScreen: { screen: HomeScreen },
-  MemeScreen: { screen: MemeScreen, path:'meme/:id' },
-  GeneratedScreen: { screen: GeneratedScreen, path:'generated/:url' },
+  MemeScreen: { screen: MemeScreen },
+  GeneratedScreen: { screen: GeneratedScreen },
 }, {
   // Default config for all screens
   headerMode: 'none',

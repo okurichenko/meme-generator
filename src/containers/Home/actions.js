@@ -1,11 +1,5 @@
 import Api from '../../lib/api';
 
-export function addRecipe() {
-  return {
-    type: 'ADD_RECIPE',
-  }
-}
-
 export function fetchMemes() {
   return (dispatch, getState) => {
     return Api.get('/get_memes').then(resp => {

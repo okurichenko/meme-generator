@@ -10,64 +10,42 @@ import {
   Button,
   KeyboardAvoidingView,
 } from 'react-native';
+import Header from '../../components/Header';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as MemeActions from './actions';
 import styles from './styles';
-import Api from '../../lib/api';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import baseStyles from '../../styles/base';
 
 class MemeContainer extends Component {
-  constructor(props) {
-    super(props);
-    const templateId = props.navigation.state.params.id;
-    const template = props.templates.find(t => t.id === templateId);
-    this.state = {
-      template,
-      text0: '',
-      text1: '',
-    }
-  }
-
   handleSubmit() {
-    const {template: {id}, text0, text1} = this.state;
-
-    return Api.post('/caption_image', {
-      template_id: id,
-      text0: text0.toUpperCase(),
-      text1: text1.toUpperCase(),
-      username: 'aleksei.kurichenko',
-      password: 'uuOXJ11',
-    }).then((response) => {
-      return this.props.navigation.navigate('GeneratedScreen', {url: response.data.url});
-    })
+    this.props.generateMeme().then(() => {
+      this.props.navigation.navigate('GeneratedScreen');
+    });
   }
 
   render() {
-    const {template} = this.state;
-    const {width} = Dimensions.get('window');
+    const { template } = this.props;
+    const { width } = Dimensions.get('window');
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={ baseStyles.container }>
         <ScrollView>
-          <View style={styles.header}>
-            <TouchableHighlight onPress={() => this.props.navigation.goBack()} style={styles.headerIcon}>
-              <Icon name="arrow-left" size={20} color="#fff"/>
-            </TouchableHighlight>
-            <Text style={styles.headerTitle}>{this.state.template.name}</Text>
-          </View>
+          <Header title={template.name} backArrowAction={ () => this.props.navigation.goBack() } />
           <Image source={{url: template.url}} style={{width, height: template.height * width / template.width}}/>
           <View style={styles.form}>
             <View style={styles.formRow}>
-              <TextInput style={styles.formRowInput}
-                         value={this.state.text0}
+              <TextInput style={baseStyles.inputField}
+                         value={this.props.text0}
                          placeholder='Text top'
                          placeholderTextColor='#888'
-                         onChangeText={(text0) => this.setState({...this.state, text0})}/>
+                         onChangeText={(text) => this.props.setText0(text)}/>
             </View>
             <View style={styles.formRow}>
-              <TextInput style={styles.formRowInput}
+              <TextInput style={baseStyles.inputField}
                          placeholder='Text bottom'
                          placeholderTextColor='#888'
-                         value={this.state.text1}
-                         onChangeText={(text1) => this.setState({...this.state, text1})}/>
+                         value={this.props.text1}
+                         onChangeText={(text) => this.props.setText1(text)}/>
             </View>
             <Button onPress={() => this.handleSubmit()} title="Submit"/>
           </View>
@@ -79,8 +57,12 @@ class MemeContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    templates: state.memes.templates,
+    ...state.generator
   };
 }
 
-export default connect(mapStateToProps)(MemeContainer);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ ...MemeActions }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MemeContainer);
